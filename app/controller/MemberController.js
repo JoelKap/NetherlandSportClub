@@ -14,8 +14,7 @@ class MemberController {
       return fetch(BACK_END_URL + "/Member")
         .then((resp) => resp.json())
         .then((arr) => {
-          const members = [{ id: "1", firstname: "Joel", surname: "Kapuku" }];
-          this.members = members;
+          this.members = arr;
           [...this.members];
           return this.members;
         })
