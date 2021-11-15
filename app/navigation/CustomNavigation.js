@@ -4,8 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ManageSportScreen from "../screens/ManageSport";
 import ViewMembersScreen from "../screens/ViewMembers";
 import ManageMembersScreen from "../screens/ManageMember";
-import ManageScreen from "../screens/Manage";
-import NestedScreen from "../screens/NestedScreen";
 import ViewSportsScreen from "../screens/ViewSports";
 
 const Stack = createStackNavigator();
@@ -31,14 +29,3 @@ const SecondScreenNavigator = () => {
 };
 
 export { SecondScreenNavigator };
-
-const ThirdScreenNavigator = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Manage" component={ManageScreen} />
-      <Stack.Screen name="NestedScreen3" component={NestedScreen} />
-    </Stack.Navigator>
-  );
-};
-
-export { ThirdScreenNavigator };

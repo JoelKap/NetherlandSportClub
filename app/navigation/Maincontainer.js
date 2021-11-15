@@ -7,13 +7,11 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import {
   FirstScreenNavigator,
   SecondScreenNavigator,
-  ThirdScreenNavigator,
 } from "./CustomNavigation";
 
 //screen names
 const SportName = "Sports";
 const MemberName = "Members";
-const ManageName = "Manage";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,8 +29,6 @@ export default function MainContainer() {
               iconName = focused ? "basketball" : "basketball-outline";
             } else if (routeName === MemberName) {
               iconName = focused ? "people" : "people-outline";
-            } else if (routeName === ManageName) {
-              iconName = focused ? "list" : "list-outline";
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -41,7 +37,6 @@ export default function MainContainer() {
       >
         <Tab.Screen name={SportName} component={FirstScreenNavigator} />
         <Tab.Screen name={MemberName} component={SecondScreenNavigator} />
-        <Tab.Screen name={ManageName} component={ThirdScreenNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   );

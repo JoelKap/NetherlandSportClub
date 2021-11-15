@@ -1,21 +1,27 @@
 import { observable, action } from "mobx";
 import { ToastAndroid } from "react-native";
 
-import localhost from "../environments/local";
+import Local from "../constants/Local";
+
+BACK_END_URL = Local.API_URL;
 
 class SportController {
   @observable sports = [];
 
   @action getAll() {
     if (!this.sports.length) {
-      return fetch(localhost.API_URL + "Sport")
+      debugger;
+      //https://jsonplaceholder.typicode.com/users
+      return fetch(BACK_END_URL + "/Sport")
         .then((resp) => resp.json())
         .then((arr) => {
+          debugger;
           this.sports = arr;
           [...this.sports];
           return this.sports;
         })
         .catch((err) => {
+          debugger;
           ToastAndroid.show(err.toString(), ToastAndroid.SHORT);
         });
     } else {
@@ -24,18 +30,64 @@ class SportController {
   }
 
   @action add(sportModel) {
-    this.initializeSports();
     debugger;
+    this.initializeMembers();
+    return fetch(BACK_END_URL + "/Sport", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(sportModel),
+    })
+      .then((resp) => resp.json())
+      .then((arr) => {
+        this.members = arr;
+        [...this.members];
+        return this.members;
+      })
+      .catch((err) => {
+        ToastAndroid.show(err.toString(), ToastAndroid.SHORT);
+      });
   }
 
   @action update(sportModel) {
-    this.initializeSports();
     debugger;
+    this.initializeMembers();
+    return fetch(BACK_END_URL + "/Sport", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(sportModel),
+    })
+      .then((resp) => resp.json())
+      .then((arr) => {
+        this.members = arr;
+        [...this.members];
+        return this.members;
+      })
+      .catch((err) => {
+        ToastAndroid.show(err.toString(), ToastAndroid.SHORT);
+      });
   }
 
   @action delete(id) {
-    this.initializeSports();
     debugger;
+    this.initializeMembers();
+    return fetch(BACK_END_URL + "/Sport" + id, {
+      method: "DELETE",
+    })
+      .then((resp) => resp.json())
+      .then((arr) => {
+        this.members = arr;
+        [...this.members];
+        return this.members;
+      })
+      .catch((err) => {
+        ToastAndroid.show(err.toString(), ToastAndroid.SHORT);
+      });
   }
 
   initializeSports() {

@@ -1,19 +1,21 @@
 import { observable, action } from "mobx";
 import { ToastAndroid } from "react-native";
 
+import Local from "../constants/Local";
+
+BACK_END_URL = Local.API_URL;
+
 class MemberController {
   @observable members = [];
 
   @action getAll() {
     if (!this.members.length) {
-      return fetch("https://jsonplaceholder.typicode.com/users")
+      debugger;
+      //https://jsonplaceholder.typicode.com/users
+      return fetch(BACK_END_URL + "/Member")
         .then((resp) => resp.json())
         .then((arr) => {
-          const members = [
-            { memberId: "1", firstname: "Joel", surname: "Kaps" },
-            { memberId: "2", firstname: "Boss", surname: "Kangi" },
-          ];
-          this.members = members;
+          this.members = arr;
           [...this.members];
           return this.members;
         })
@@ -26,18 +28,64 @@ class MemberController {
   }
 
   @action add(memberModel) {
-    this.initializeMembers();
     debugger;
+    this.initializeMembers();
+    return fetch(BACK_END_URL + "/Member", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(memberModel),
+    })
+      .then((resp) => resp.json())
+      .then((arr) => {
+        this.members = arr;
+        [...this.members];
+        return this.members;
+      })
+      .catch((err) => {
+        ToastAndroid.show(err.toString(), ToastAndroid.SHORT);
+      });
   }
 
   @action update(memberModel) {
-    this.initializeMembers();
     debugger;
+    this.initializeMembers();
+    return fetch(BACK_END_URL + "/Member", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(memberModel),
+    })
+      .then((resp) => resp.json())
+      .then((arr) => {
+        this.members = arr;
+        [...this.members];
+        return this.members;
+      })
+      .catch((err) => {
+        ToastAndroid.show(err.toString(), ToastAndroid.SHORT);
+      });
   }
 
   @action delete(id) {
-    this.initializeMembers();
     debugger;
+    this.initializeMembers();
+    return fetch(BACK_END_URL + "/Member" + id, {
+      method: "DELETE",
+    })
+      .then((resp) => resp.json())
+      .then((arr) => {
+        this.members = arr;
+        [...this.members];
+        return this.members;
+      })
+      .catch((err) => {
+        ToastAndroid.show(err.toString(), ToastAndroid.SHORT);
+      });
   }
 
   initializeMembers() {
