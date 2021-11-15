@@ -10,12 +10,12 @@ class MemberController {
 
   @action getAll() {
     if (!this.members.length) {
-      debugger;
       //https://jsonplaceholder.typicode.com/users
       return fetch(BACK_END_URL + "/Member")
         .then((resp) => resp.json())
         .then((arr) => {
-          this.members = arr;
+          const members = [{ id: "1", firstname: "Joel", surname: "Kapuku" }];
+          this.members = members;
           [...this.members];
           return this.members;
         })
@@ -23,12 +23,15 @@ class MemberController {
           ToastAndroid.show(err.toString(), ToastAndroid.SHORT);
         });
     } else {
-      return this.members;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(this.members);
+        }, 200);
+      });
     }
   }
 
   @action add(memberModel) {
-    debugger;
     this.initializeMembers();
     return fetch(BACK_END_URL + "/Member", {
       method: "POST",
@@ -50,7 +53,6 @@ class MemberController {
   }
 
   @action update(memberModel) {
-    debugger;
     this.initializeMembers();
     return fetch(BACK_END_URL + "/Member", {
       method: "PUT",

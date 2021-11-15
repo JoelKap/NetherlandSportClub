@@ -14,7 +14,7 @@ export default class ViewSportsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      sports: [],
       sport: {},
       isEdit: false,
       isDelete: false,
@@ -23,7 +23,7 @@ export default class ViewSportsComponent extends React.Component {
 
   componentDidMount() {
     SportController.getAll().then((resp) => {
-      this.setState({ data: resp });
+      this.setState({ sports: resp });
     });
   }
 
@@ -35,7 +35,7 @@ export default class ViewSportsComponent extends React.Component {
     return (
       <SafeAreaView>
         <FlatList
-          data={this.state.data}
+          data={this.state.sports}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>

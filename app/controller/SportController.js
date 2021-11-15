@@ -10,27 +10,27 @@ class SportController {
 
   @action getAll() {
     if (!this.sports.length) {
-      debugger;
       //https://jsonplaceholder.typicode.com/users
       return fetch(BACK_END_URL + "/Sport")
         .then((resp) => resp.json())
         .then((arr) => {
-          debugger;
           this.sports = arr;
           [...this.sports];
           return this.sports;
         })
         .catch((err) => {
-          debugger;
           ToastAndroid.show(err.toString(), ToastAndroid.SHORT);
         });
     } else {
-      return this.sports;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(this.sports);
+        }, 200);
+      });
     }
   }
 
   @action add(sportModel) {
-    debugger;
     this.initializeMembers();
     return fetch(BACK_END_URL + "/Sport", {
       method: "POST",
@@ -52,7 +52,6 @@ class SportController {
   }
 
   @action update(sportModel) {
-    debugger;
     this.initializeMembers();
     return fetch(BACK_END_URL + "/Sport", {
       method: "PUT",
@@ -74,7 +73,6 @@ class SportController {
   }
 
   @action delete(id) {
-    debugger;
     this.initializeMembers();
     return fetch(BACK_END_URL + "/Sport" + id, {
       method: "DELETE",
